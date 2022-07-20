@@ -1,0 +1,48 @@
+﻿
+@{
+    //Layout = null;
+}
+
+@model TestFinal.Models.Trainer
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h3>Add Trainer</h3>
+    <form method="post" asp-controller="trainer" asp-action="add">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input type="text" asp-for="Name" />
+                </td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>
+                    <input type="text" asp-for=" Email" />
+                </td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td>
+                    <input type="text" asp-for="Phone" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="submit" value="Save" />
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</body>
+</html>

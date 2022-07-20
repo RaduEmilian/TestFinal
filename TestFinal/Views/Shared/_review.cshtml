@@ -1,0 +1,31 @@
+﻿@model TestFinal.Models.Review
+@{
+    ViewData["Title"] = "Review";
+    var photoPath = "/images/" + (Model.User.ProfilePicture ?? "img.png");
+   
+}
+
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-sm-6 col-md-4">
+            <img src="@photoPath" style="width:40px;height:40px">
+            <h6> @Model.User.FirstName</h6>
+        </div>
+        <div class="col-7">
+            <h6>@Model.ReviewDate.ToString()</h6>
+            <h6> @Model.ReviewMessage</h6>
+            <h6> @Model.Rate</h6>
+            <h6>
+                @for (int i = 0; i < @Model.Rate; i++)
+                {
+                    <i class="fa fa-solid fa-star" style="color:gold"></i>
+                }
+                @for (int i = @Model.Rate; i < 5; i++)
+                {
+                    <i class="" style="color:gold"></i>
+                }
+            </h6>
+        </div>
+    </div>
+</div>

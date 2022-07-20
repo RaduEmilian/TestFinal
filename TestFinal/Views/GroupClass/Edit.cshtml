@@ -1,0 +1,97 @@
+﻿
+
+
+@{
+    //Layout = null;
+}
+
+@model TestFinal.ViewModels.EditGroupClassViewModel
+
+<!DOCTYPE html>
+
+<html>
+
+<body>
+    <style>
+        /*----------ADD GroupClass----------*/
+
+        .add-groupclasses img {
+            background-position: cover;
+        }
+
+        .add-groupclasses-form {
+            /*width: fit-content;*/
+            box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+            background: #fff;
+            padding: 20px;
+            margin: 8% auto 0;
+            text-align: center;
+        }
+
+            .add-groupclasses-form h1 {
+                color: #ff3c00;
+                margin-bottom: 30px;
+            }
+
+        #add-groupclasses button {
+            color: #fff;
+            width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            font-size: 15px;
+            margin: 10px 0;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .add-btn {
+            background-color: #000000;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .add-groupclasses-form img {
+            width: 70px;
+            margin-top: -50px;
+        }
+
+        body .add-groupclasses-form {
+            background-image: url(image/4moving.jpg);
+            background-position: center;
+        }
+    </style>
+    <section id="add-groupclasses">
+        <div class="add-groupclasses-form">
+            <img src="\image\4moving.jpg" />
+            <h1>Edit Class</h1>
+            <form asp-action="editgroupclass">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class=" form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RoomNumber" class="control-label"></label>
+                    <input asp-for="RoomNumber" class="form-control" />
+                    <span asp-validation-for="RoomNumber" class="text-danger"></span>
+                </div>
+                <br />
+                <button type="submit" class="add-btn">Edit Classes</button>
+            </form>
+        </div>
+        <br />
+    </section>
+    <br />
+
+</body>
+</html>
+

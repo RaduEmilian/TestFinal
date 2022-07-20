@@ -1,0 +1,26 @@
+﻿@model TestFinal.ViewModels.CreateResponseViewModel
+
+<div class="container" style="margin-top:120px;">
+
+    <form enctype="multipart/form-data" class="text-start" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Subject">Subiect</label>
+            <input type="text" asp-for="Subject" class="form-control" id="inputAddress2" placeholder="Subiect">
+        </div>
+        <div class="form-group">
+            <label asp-for="Message">Mesaj</label>
+            <input type="text" asp-for="Message" class="form-control" id="inputAddress2" placeholder="Mesaj">
+        </div>
+
+
+        <div class="col-auto">
+            <button type="submit" class="btn btn-info" id="buton">
+                <i class="fa fa-plus"></i>
+                Adauga
+            </button>
+        </div>
+
+    </form>
+</div>

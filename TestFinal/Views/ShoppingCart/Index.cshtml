@@ -1,0 +1,56 @@
+﻿@model TestFinal.ViewModels.ShoppingCartViewModel
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+
+<div class="container" style="margin-top:200px;">
+    <h2><i class="fa fa-cart-plus"></i>Cos</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Cantitate</th>
+                <th>Modifica</th>
+                <th>Produs</th>
+                <th class="text-right">Pret</th>
+                <th class="text-right">Pret final</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
+            {
+                <tr>
+                    <td class="text-center">@item.Amount</td>
+                    <td>
+                        <form method="post" asp-controller="ShoppingCart" asp-action="UpdateCart" asp-route-productId="@item.Produs.ProductId">
+                            <div class="row" style="margin-left:1px; margin-right:0;">
+                                <input name="amount" placeholder="@item.Amount" value="@item.Amount" style="height:38px; width:45px;" />
+                                <button type="submit" class="btn btn-primary" style="margin-left:10px; ">Modifica</button>
+                            </div>
+                        </form>
+                    </td>
+
+                    <td class="text-left">@item.Produs.ProductName</td>
+                    <td class="text-right">@item.Produs.Pret.ToString() RON</td>
+                    <td class="text-right">
+                        @((item.Amount * item.Produs.Pret).ToString()) RON
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right">Transport</td>
+                <td class="text-right">16.99 RON</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-right" style="font-weight:bold;">Total</td>
+                <td class="text-right" style="font-weight:bold;">@Model.ShoppingCartTotal.ToString() RON</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="text-center">
+        <a class="btn btn-danger" asp-controller="ShoppingCart" asp-action="ClearCart">Clear Cart</a>
+        <a class="btn btn-info" asp-controller="Order" asp-action="Checkout">Checkout</a>
+    </div>
+</div>

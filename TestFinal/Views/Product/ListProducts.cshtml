@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> signInManager;
+@inject UserManager<ApplicationUser> userManager
+
+@using System.Net
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+<h2 class="" style="margin-left:45%">
+    <span class="fa fa-bullhorn"></span>
+    Produse
+</h2>
+
+<div class="row" style="margin-top:20px;">
+    @foreach (var product in Model)
+    {
+        var photoPath = "/images/" + (product.ProductPicture ?? "img.png");
+<div class="col-4">
+    <div class="container-fluid text-center container-content">
+
+        <div class="card mb-3">
+
+            <div class="card-body">
+                <h5 class="card-title">@product.ProductName</h5>
+                <img src="@photoPath" alt="Alternate Text" style="width: 200px; height: 200px" />
+               
+                <p class="card-text">
+                    @product.Pret Euro
+                </p>
+                @if (product.ProductStock <= 0)
+                {
+            <p>Product out of stock</p> }
+                else
+                {
+@if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
+{
+
+    var user = await userManager.GetUserAsync(signInManager.Context.User);
+<div class="addToCart">
+    <p class="button">
+        <a class="btn btn-primary"
+           asp-controller="ShoppingCart"
+           asp-action="AddToShoppingCart"
+           asp-route-productId="@product.ProductId">Add to Cart</a>
+    </p>
+</div>
+                    
+
+                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@product.ProductId" class="btn btn-outline-dark">
+                                                    <img src="https://img.icons8.com/ios/50/000000/details-pane.png" style="height:30px;width:30px" />
+                                                    Details
+                                                </a> }
+                                                                    else
+                                                                    {
+                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@product.ProductId" class="btn btn-outline-dark">
+                                                    <img src="https://img.icons8.com/ios/50/000000/details-pane.png" style="height:30px;width:30px" />
+                                                    Details
+                                                </a>}}
+
+            </div>
+        </div>
+    </div>
+</div>}
+   
+</div>

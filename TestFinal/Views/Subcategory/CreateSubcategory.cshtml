@@ -1,0 +1,57 @@
+﻿@model TestFinal.ViewModels.CreateSubcategoryViewModel
+
+@{ ViewData["Title"] = "Create SubCategory"; }
+
+<div class="content container-fluid">
+    <div class="container-fluid text-center container-content">
+        <h2 class="" style="margin-top:20px;">
+            Add Subcategory
+            <br>
+        </h2>
+    </div>
+    <div class="container-fluid text-center container-content">
+        <hr>
+        <div class="card mb-3">
+            <div class="card-header bg-custom text-black">
+                <i class="fas fa-sign-in-alt"></i> Subcategory
+            </div>
+            <div class="card-body mx-auto">
+                <h5 class="card-title"></h5>
+                <p class="card-text">
+
+                </p>
+                <form enctype="multipart/form-data" class="row gx-3 gy-2 align-items-center" method="post">
+                    <div class="col">
+                        <label asp-for="Nume">Subcategory Name</label>
+                        <input asp-for="Nume" type="text" class="form-control" style="width: auto" placeholder="Option Name" required>
+                        <span asp-validation-for="Nume" class="text-danger"></span>
+
+                        @*<div class="col">
+                            <input asp-for="Photo" type="file" class="form-control custom-file-input" id="inputGroupFile02">
+                            <label asp-for="Photo" class="input-group-text" for="inputGroupFile02">Poza de Profil</label>
+                            <span asp-validation-for="Photo" class="text-danger"></span>
+                        </div>*@
+                        <div class="col">
+                            <label asp-for="Category" class="form-label">Category</label>
+                            <select asp-for="Category" class="form-select" asp-items="@(new SelectList(Model.Categories))">
+                                <option selected>Choose...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col align-self-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,171 @@
+﻿@model TestFinal.ViewModels.GroupClassViewModel
+@using System.Net
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> signInManager
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div class="content container-fluid" style="display:compact;">
+        <div class="container-fluid text-center container-content">
+            <h2 class="">
+
+                <br>
+                Reviews
+            </h2>
+        </div>
+        <div class="container-fluid text-center container-content">
+            <hr>
+            <div class="card mb-3">
+                <div class="card-body mx-auto">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">
+                        @if (@Model.Reviews != null)
+                        {
+                        <p class="tag-section mb-1 "> @Model.Reviews.Count() reviews</p>
+                    }
+                    else
+                    {
+                        <p class="tag-section mb-1 ">
+                            0 reviews
+                        </p>
+                    }
+                   </p>
+                        @foreach (var item in Model.Reviews)
+                        {
+                            @Html.Partial("_review", item)
+                        }
+                        @if (@HttpContextAccessor.HttpContext.User.Identity.Name != null)
+                        {
+                            <hr />
+                            <h3>Leave a review</h3>
+
+                            @using (Html.BeginForm(actionName: "AddReviewGroupClass", controllerName: "Review", FormMethod.Post, htmlAttributes: new { onsubmit = "return VerifyRating()" }))
+                            {
+                                <div class="form-group">
+
+                                    <textarea class="form-control" name="comment" id="txtBookComment" rows="6"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <div onmouseout="CRateSelected()">
+                                        <i class="fa fa-solid fa-star" id="i1" onclick="CRate(1)" onmouseover="CRateOver(1)" onmouseout="CRateOut(1)"></i>
+                                        <i class="fa fa-solid fa-star" id="i2" onclick="CRate(2)" onmouseover="CRateOver(2)" onmouseout="CRateOut(2)"></i>
+                                        <i class="fa fa-solid fa-star" id="i3" onclick="CRate(3)" onmouseover="CRateOver(3)" onmouseout="CRateOut(3)"></i>
+                                        <i class="fa fa-solid fa-star" id="i4" onclick="CRate(4)" onmouseover="CRateOver(4)" onmouseout="CRateOut(4)"></i>
+                                        <i class="fa fa-solid fa-star" id="i5" onclick="CRate(5)" onmouseover="CRateOver(5)" onmouseout="CRateOut(5)"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-9">
+                                        <input type="number" style="border:solid ; outline:solid" name="rate" id="lblRating" value="0" />
+                                        <input type="hidden" style="border:solid ; outline:solid" name="Id" id="lblRating" value="@Model.Id" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success" style="margin-top:10px;">Send Review</button>
+                            }
+
+                        }
+
+                    </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        var $content = $('.menu-content');
+        function showContent(type) {
+            $content.hide().filter('.' + type).show();
+        }
+        $('.menu').on('click', '.menu-btn', function (e) {
+            showContent(e.currentTarget.hash.slice(1));
+            e.preventDefault();
+        });
+        // show 'about' content only on page load (if you want)
+        showContent('about');
+    </script>
+    <script>
+        function myFunction(imgs) {
+            var expandImg = document.getElementById("first_image");
+            expandImg.src = imgs.src;
+            expandImg.parentElement.style.display = "block";
+        }
+        function ShowProduct() {
+            document.getElementById('div1').style.display = "block";
+            document.getElementById('div2').style.display = "none";
+            document.getElementById('div3').style.display = "none";
+            document.getElementById('div4').style.display = "none";
+            document.getElementById('btn-1').focus();
+        }
+        function ShowSpecifications() {
+            document.getElementById('div1').style.display = "none";
+            document.getElementById('div2').style.display = "block";
+            document.getElementById('div3').style.display = "none";
+            document.getElementById('div4').style.display = "none";
+            document.getElementById('btn-2').focus();
+            document.getElementById('btn-1').setAttribute("class", "nav-link  menu-btn btn-info");
+        }
+        function ShowDescription() {
+            document.getElementById('div1').style.display = "none";
+            document.getElementById('div2').style.display = "none";
+            document.getElementById('div3').style.display = "block";
+            document.getElementById('div4').style.display = "none";
+            document.getElementById('btn-3').focus();
+            document.getElementById('btn-1').setAttribute("class", "nav-link  menu-btn btn-info");
+        }
+        function ShowReview() {
+            document.getElementById('div1').style.display = "none";
+            document.getElementById('div2').style.display = "none";
+            document.getElementById('div3').style.display = "none";
+            document.getElementById('div4').style.display = "block";
+            document.getElementById('btn-4').focus();
+            document.getElementById('btn-1').setAttribute("class", "nav-link  menu-btn btn-info");
+
+        }
+        function CRate(r) {
+            $("#Rating").val(r);
+            for (var i = 1; i <= r; i++) {
+                $("#i" + i).attr('class', 'fa fa-solid fa-stars-sharp');
+            }
+            // unselect remaining
+            for (var i = r + 1; i <= 5; i++) {
+                $("#i" + i).attr('class', 'fa fa-solid fa-star');
+            }
+        }
+        function CRateOver(r) {
+            for (var i = 1; i <= r; i++) {
+                $("#i" + i).attr('class', 'fa fa-solid fa-star-sharp');
+            }
+        }
+        function CRateOut(r) {
+            for (var i = 1; i <= r; i++) {
+                $("#i" + i).attr('class', 'fa fa-solid fa-star');
+            }
+        }
+        function CRateSelected() {
+            var setRating = $("#Rating").val();
+            for (var i = 1; i <= setRating; i++) {
+                $("#i" + i).attr('class', 'fa fa-solid fa-home');
+            }
+        }
+        function VerifyRating() {
+            var rating = $("#lblRating").val();
+            if (rating == "0") {
+                alert("Please select rating");
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+﻿@inject SignInManager<ApplicationUser> signInManager;
+@model IEnumerable<GroupClass>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+</head>
+<body>
+    <style>
+        .content-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0.15);
+            align-items: center;
+            justify-content: center;
+        }
+
+            .content-table thead tr {
+                background-color: #00ff90;
+                color: #ffffff;
+                text-align: left;
+                font-weight: bold;
+            }
+
+            .content-table th, .content-table td {
+                padding: 12px 15px;
+            }
+
+            .content-table tbody tr {
+                border-bottom: 1px solid #fff;
+            }
+
+                .content-table tbody tr:nth-of-type(even) {
+                    background-color: #f3f3f3;
+                }
+
+                .content-table tbody tr:last-of-type {
+                    border-bottom: 2px solid #009879;
+                }
+
+        .btn-1 {
+            width: 150px;
+            height: 55px;
+            border: none;
+            color: #ffffff;
+            background-color: #ff0000;
+            border-radius: 4px;
+            box-shadow: inset 0 0 0 0 #f9e506;
+            transition: ease-out 0.3s;
+            font-size: 2rem;
+            outline: none;
+        }
+
+            .btn-1:hover {
+                box-shadow: inset 300px 0 0 0 #f9e506;
+                cursor: pointer;
+                color: rgba(0, 0, 0.15)
+            }
+
+        .search_size {
+            width: 200px;
+            height: 40px;
+        }
+    </style>
+
+    <h3>Group Class List</h3>
+
+
+    <table class=" content-table" style="padding-top:10px;">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>RoomNumber</th>
+                @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin")) {
+                    <th>Action</th>
+                }
+            </tr>
+        </thead>
+        @foreach (var groupClass in Model)
+        {
+    <tr>
+        <td>@groupClass.Id</td>
+        <td>@groupClass.Title</td>
+        <td>@groupClass.Description</td>
+        <td>@groupClass.RoomNumber</td>
+        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+    <td>
+
+        <a class="btn btn-danger" asp-action="deletegroupclass" asp-controller="groupclass" asp-route-id="@groupClass.Id">
+            <i class="fa fa-delete"></i>
+            Delete
+        </a>
+
+        <a class="btn btn-info" asp-action="editgroupclass" asp-controller="groupclass" asp-route-id="@groupClass.Id">
+            <i class="fa fa-envelope"></i>
+            Edit
+        </a>
+
+       
+
+    </td>          }
+                else
+                {
+    <td>
+        <a class="btn btn-info" asp-action="Details" asp-controller="GroupClass" asp-route-id="@groupClass.Id">
+            <i class="fa fa-envelope"></i>
+            Review
+        </a>
+    </td>
+                }
+       
+      
+    </tr>
+        }
+    </table>
+
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+        <a asp-controller="groupclass" asp-action="creategroupclass">Add New Class Group</a>
+
+    }
+
+    <section id="classes" class="p-5 bg-primary">
+        <div class="container">
+            <h2 class="text-center text-white">Our Classes</h2>
+            <p class="lead text-center text-white mb-5">
+                Antrenamentele de group fitness sunt cât se poate de benefice și merită să le încerci.
+            </p>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="~/images/My project.jpg" class="rounded-circle mb-3" alt="" />
+                            <h3 class="card-title mb-3">Lifting Weights</h3>
+                            <p class="card-text">Weight training, also known as resistance or strength training, builds lean, stronger muscles, strengthens your bones and joints, and can help keep your metabolism in a healthy state — meaning you’ll burn more calories even when you’re resting.</p>
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-github"></i></a>
+                            <a href="#"><i class="fa fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="~/images/My project1.jpg" class="rounded-circle mb-3" alt="" />
+                            <h3 class="card-title mb-3">Cardio</h3>
+                            <p class="card-text">Regular cardio exercise can also help you lose weight, get better sleep, and reduce your risk for chronic disease.</p>
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-github"></i></a>
+                            <a href="#"><i class="fa fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="~/images/My project2.jpg" class="rounded-circle mb-3" alt="" />
+                            <h3 class="card-title mb-3">Yoga</h3>
+                            <p class="card-text">Yoga is a great addition to any fitness routine. Unlike your high-intensity interval training (HIIT) workouts or weight-lifting sessions, yoga is often slow, and it focuses more on being mindful and stretching out the body—two things that come with huge benefits. It's totally possible, though, to incorporate strength training into a yoga workout too.</p>
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-github"></i></a>
+                            <a href="#"><i class="fa fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="~/images/My project3.jpg" class="rounded-circle mb-3" alt="" />
+                            <h3 class="card-title mb-3">TRX</h3>
+                            <p class="card-text">Give a man a suspension trainer, and he'll be pumped for a day – show a man the best TRX exercises, and he'll be ripped for life. Or something like that. First invented by a US Navy SEAL using only a jiu-jitsu belt and parachute webbing back in 1997, the TRX pits your bodyweight against gravity to build functional upper body, lower body and core muscle. And trust us, it burns.</p>
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-github"></i></a>
+                            <a href="#"><i class="fa fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</body>
+</html>

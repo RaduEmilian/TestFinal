@@ -1,0 +1,179 @@
+﻿@inject SignInManager<ApplicationUser> signInManager;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gym Management</title>
+   
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @*<link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css" />*@
+    <script src="https://kit.fontawesome.com/e64334a162.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand active" asp-area="" asp-controller="Home" asp-action="Index">4MOVING</a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon "></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+                    <ul class="navbar-nav m-auto">
+                        <li class="nav-item">
+                            <a class="nav-link " asp-area="" asp-controller="subscription" asp-action="Index">Subscription</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-area="" asp-controller="groupclass" asp-action="Index">Classes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-area="" asp-controller="Contact" asp-action="CreateContact">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-area="#" asp-controller="Images" asp-action="Index">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-area="#" asp-controller="Product" asp-action="ListProducts">Products</a>
+                        </li>
+
+                    </ul>
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {<li class="nav-item dropdown text-center">
+                            <a class="btn btn-sm btn-success dropdown-toggle" style="margin-right:10px;" data-toggle="dropdown"
+                               aria-expanded="false">
+                                Activity
+                            </a>
+                            <!-- Dropdown menu -->
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" asp-controller="category" asp-action="createcategory">Category</a></li>
+                                <li><a class="dropdown-item" asp-controller="category" asp-action="categorylist">List Category</a></li>
+                                <li><a class="dropdown-item" asp-controller="subcategory" asp-action="createsubcategory">Subcategory</a></li>
+                                <li><a class="dropdown-item" asp-controller="subcategory" asp-action="subcategorylist">List Subcategory</a></li>
+                                <li><a class="dropdown-item" asp-controller="product" asp-action="createproduct">Create Product</a></li>
+                                <li><a class="dropdown-item" asp-controller="product" asp-action="listproduct">List Product</a></li>
+                                <li><a class="dropdown-item" asp-controller="order" asp-action="list">Order List</a></li>
+                            </ul>
+                        </li>
+
+                        <a asp-action="Profile" asp-controller="account">
+                            <i class="btn btn-sm btn-success" style="margin-right:10px;" aria-hidden="true">Profile</i>
+                        </a>
+                        <a asp-controller="administration" asp-action="listroles">
+                            <i class="btn btn-sm btn-success" style="margin-right:10px;" aria-hidden="true">Roles</i>
+                        </a>
+
+                        <a asp-controller="contact" asp-action="contactList">
+                            <i class="btn btn-sm btn-success" style="margin-right:10px;" aria-hidden="true">View Message</i>
+                        </a>
+
+                        <form method="post" asp-controller="account" asp-action="logout">
+                            <button type="submit"
+                                    class="btn btn-success btn-sm ">
+                                Logout @User.Identity.Name
+                            </button>
+                        </form>
+
+
+
+                    }
+                    else @if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
+               {
+                <li class="nav-item dropdown text-center">
+                    <a class="btn btn-sm btn-success dropdown-toggle" style="margin-right:10px;" data-toggle="dropdown"
+                       aria-expanded="false">
+                        Activity
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" asp-controller="order" asp-action="listorder">Orders</a></li>
+                        <li><a class="dropdown-item" asp-controller="shoppingcart" asp-action="index">My Cart</a></li>
+                        
+                    </ul>
+                </li>
+
+
+                <a asp-action="Profile" asp-controller="account" class="btn btn-success btn-sm ml-3">
+                    <i class="fa fa-user" aria-hidden="true">Profile</i>
+                </a>
+
+
+                <form method="post" asp-controller="account" asp-action="logout">
+                    <button type="submit"
+                            class="btn btn-success btn-sm ml-3">
+                        Logout @User.Identity.Name
+                    </button>
+                </form>
+
+
+            }
+            else @if (signInManager.IsSignedIn(User))
+           {
+            <!-- Example single danger button -->
+
+            <a asp-action="Profile" asp-controller="account" class="btn btn-success btn-sm ml-3">
+                <i class="fa fa-user" aria-hidden="true">Contul Tau</i>
+            </a>
+
+            <form method="post" asp-controller="account" asp-action="logout">
+                <button type="submit"
+                        class="btn btn-success btn-sm ml-3">
+                    Logout @User.Identity.Name
+                </button>
+            </form>
+
+        }
+
+
+        else
+        {
+            <a asp-action="register" asp-controller="account" class="btn btn-success btn-sm ml-3">
+                <i class="fa fa-user" aria-hidden="true">Register</i>
+            </a>
+            <a asp-action="login" asp-controller="account" class="btn btn-success btn-sm ml-3">
+                <i class="fa fa-user" aria-hidden="true">Login</i>
+            </a>
+        }
+
+
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+    <div class="container-fluid" style="margin-top:100px;">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+
+
+    <script type="text/javascript" src="~/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/popper.js/cjs/popper.min.js"></script>
+
+    <script src="~/js/owl.carousel.min.js"></script>
+   
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+
+</body>
+</html>

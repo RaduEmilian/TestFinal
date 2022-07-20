@@ -1,0 +1,82 @@
+﻿@inject SignInManager<ApplicationUser> signInManager;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+</head>
+<body>
+    <style>
+        h3 {
+            font-size: 22px;
+            color: blue;
+        }
+
+        .container1 {
+            margin-top: 20px;
+            color: black;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+    </style>
+
+    <h3>Trainer List</h3>
+
+    <form class="container1" method="get" asp-controller="trainer" asp-action="search">
+        Keyword <input type="text" name="keyword" value="@ViewBag.keyword" />
+        <input type="submit" value="Search" />
+    </form>
+
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+        <a asp-controller="trainer" asp-action="add">Add New Trainer</a>
+    }
+
+        <table id="customers" ,border="1">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+            @foreach (var trainer in ViewBag.trainers)
+            {
+        <tr>
+            <td>@trainer.Id</td>
+            <td>@trainer.Name</td>
+            <td>@trainer.Email</td>
+            <td>@trainer.Phone</td>
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-controller="trainer" asp-action="delete" asp-route-id="@trainer.Id">Delete</a>
+                    <a asp-controller="trainer" asp-action="edit" asp-route-id="@trainer.Id">Edit</a>
+                </td>
+            }
+
+        </tr>
+            }
+        </table>
+    </body>
+</html>
